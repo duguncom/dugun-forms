@@ -12,7 +12,8 @@ function DgFormDate(moment) {
             required: '=ngRequired',
             placeholder: '@',
             id: '@dgId',
-            ngChange: '&'
+            ngChange: '&',
+            options: '=?options'
         },
         templateUrl: 'form-elements/date/date.html',
         link: function(scope, element, attrs) {
