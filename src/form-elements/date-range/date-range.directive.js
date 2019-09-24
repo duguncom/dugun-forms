@@ -12,7 +12,8 @@ function DgFormDateRange(moment) {
             modelEnd: '=ngModelEnd',
             required: '=ngRequired',
             options: '=',
-            clearable: '='
+            clearable: '=',
+            ngDisabled: '='
         },
         templateUrl: 'form-elements/date-range/date-range.html',
         link: function(scope, element, attrs) {

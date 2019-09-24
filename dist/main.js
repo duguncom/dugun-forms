@@ -397,72 +397,6 @@ angular.module('dugun.forms').directive('dgFormHtml', DgFormHtml);
 
 /**
  * @ngdoc directive
- * @name dugun.forms:DgFormDateRange
- * @restrict 'E'
- * @scope
- **/
-function DgFormDateRange(moment) {
-    return {
-        restrict: 'AEC',
-        scope: {
-            modelStart: '=ngModelStart',
-            modelEnd: '=ngModelEnd',
-            required: '=ngRequired',
-            options: '=',
-            clearable: '='
-        },
-        templateUrl: 'form-elements/date-range/date-range.html',
-        link: function(scope, element, attrs) {
-            scope.attrs = attrs;
-            scope.dates = {startDate: null, endDate: null};
-
-            function datesChanged(newValue) {
-                if(!newValue) return;
-                if(newValue.startDate) {
-                    scope.modelStart = newValue.startDate.format('YYYY-MM-DD');
-                } else {
-                    delete scope.modelStart;
-                }
-                if(newValue.endDate) {
-                    scope.modelEnd = newValue.endDate.format('YYYY-MM-DD');
-                } else {
-                    delete scope.modelEnd;
-                }
-            }
-
-            // Initialize scope.dates with values from model.
-            function init() {
-                if(
-                    (scope.modelStart && !scope.dates.startDate) ||
-                    (scope.modelEnd && !scope.dates.endDate)
-                ) {
-                    scope.dates = {
-                        startDate: moment(scope.modelStart),
-                        endDate: moment(scope.modelEnd),
-                    };
-                }
-
-                if(!scope.modelStart || !scope.modelEnd) {
-                    scope.dates = {startDate: null, endDate: null};
-                }
-            }
-
-            init();
-            scope.$watch('modelStart', init);
-            scope.$watch('modelEnd', init);
-            scope.$watch('dates', datesChanged, true);
-        }
-    };
-}
-
-DgFormDateRange.$inject = [
-    'moment',
-];
-
-angular.module('dugun.forms').directive('dgFormDateRange', DgFormDateRange);
-
-/**
- * @ngdoc directive
  * @name dugun.forms:DgFormDateTime
  * @restrict 'ACE'
  * @scope
@@ -600,6 +534,73 @@ DgFormDate.$inject = [
 ];
 
 angular.module('dugun.forms').directive('dgFormDate', DgFormDate);
+
+/**
+ * @ngdoc directive
+ * @name dugun.forms:DgFormDateRange
+ * @restrict 'E'
+ * @scope
+ **/
+function DgFormDateRange(moment) {
+    return {
+        restrict: 'AEC',
+        scope: {
+            modelStart: '=ngModelStart',
+            modelEnd: '=ngModelEnd',
+            required: '=ngRequired',
+            options: '=',
+            clearable: '=',
+            ngDisabled: '='
+        },
+        templateUrl: 'form-elements/date-range/date-range.html',
+        link: function(scope, element, attrs) {
+            scope.attrs = attrs;
+            scope.dates = {startDate: null, endDate: null};
+
+            function datesChanged(newValue) {
+                if(!newValue) return;
+                if(newValue.startDate) {
+                    scope.modelStart = newValue.startDate.format('YYYY-MM-DD');
+                } else {
+                    delete scope.modelStart;
+                }
+                if(newValue.endDate) {
+                    scope.modelEnd = newValue.endDate.format('YYYY-MM-DD');
+                } else {
+                    delete scope.modelEnd;
+                }
+            }
+
+            // Initialize scope.dates with values from model.
+            function init() {
+                if(
+                    (scope.modelStart && !scope.dates.startDate) ||
+                    (scope.modelEnd && !scope.dates.endDate)
+                ) {
+                    scope.dates = {
+                        startDate: moment(scope.modelStart),
+                        endDate: moment(scope.modelEnd),
+                    };
+                }
+
+                if(!scope.modelStart || !scope.modelEnd) {
+                    scope.dates = {startDate: null, endDate: null};
+                }
+            }
+
+            init();
+            scope.$watch('modelStart', init);
+            scope.$watch('modelEnd', init);
+            scope.$watch('dates', datesChanged, true);
+        }
+    };
+}
+
+DgFormDateRange.$inject = [
+    'moment',
+];
+
+angular.module('dugun.forms').directive('dgFormDateRange', DgFormDateRange);
 
 /**
  * @ngdoc directive
@@ -797,6 +798,11 @@ angular.module('dugun.forms').run(['$templateCache', function($templateCache) {
 }]);
 
 angular.module('dugun.forms').run(['$templateCache', function($templateCache) {
+  $templateCache.put('form-elements/date-range/date-range.html',
+    '<input date-range-picker class="form-control full-width date-picker" type="text" ng-model="dates" options="options" clearable="clearable" ng-required="required" ng-attr-form="{{ attrs.form ? attrs.form : undefined }}" ng-attr-name="{{ attrs.dgName ? attrs.dgName : undefined }}" ng-attr-placeholder="{{ attrs.placeholder || undefined }}" ng-attr-id="{{ attrs.dgId || undefined }}" ng-disabled="ngDisabled ? true : false">');
+}]);
+
+angular.module('dugun.forms').run(['$templateCache', function($templateCache) {
   $templateCache.put('form-elements/date/date.html',
     '<input type="text" class="form-control" ng-model="date" ng-attr-id="{{ id || \'\' }}" uib-datepicker-popup ng-click="datepickerPopupOpen = true" is-open="datepickerPopupOpen" ng-required="required" ng-attr-form="{{ attrs.form ? attrs.form : undefined }}" placeholder="{{ placeholder || \'\' }}">');
 }]);
@@ -804,11 +810,6 @@ angular.module('dugun.forms').run(['$templateCache', function($templateCache) {
 angular.module('dugun.forms').run(['$templateCache', function($templateCache) {
   $templateCache.put('form-elements/datetime/datetime.html',
     '<div class="row"><dg-form-date class="col-xs-12 col-md-6" ng-model="date" ng-required="required"></dg-form-date><dg-form-time class="col-xs-12 col-md-6" ng-model="time" ng-required="required"></dg-form-time></div>');
-}]);
-
-angular.module('dugun.forms').run(['$templateCache', function($templateCache) {
-  $templateCache.put('form-elements/date-range/date-range.html',
-    '<input date-range-picker class="form-control full-width date-picker" type="text" ng-model="dates" options="options" clearable="clearable" ng-required="required" ng-attr-form="{{ attrs.form ? attrs.form : undefined }}" ng-attr-name="{{ attrs.dgName ? attrs.dgName : undefined }}" ng-attr-placeholder="{{ attrs.placeholder || undefined }}" ng-attr-id="{{ attrs.dgId || undefined }}">');
 }]);
 
 angular.module('dugun.forms').run(['$templateCache', function($templateCache) {
