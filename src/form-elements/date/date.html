@@ -4,8 +4,9 @@
     ng-model="date"
     ng-attr-id="{{ id || '' }}"
     uib-datepicker-popup
-    ng-click="datepickerPopupOpen = true"
-    is-open="datepickerPopupOpen"
+    ng-click="datePickerPopupStatus.isOpen = true; datePickerPopupOpen.open = true"
+    is-open="datePickerPopupStatus.isOpen"
+    is-open="datePickerPopupOpen.isopen"
     ng-required="required"
     ng-attr-form="{{ attrs.form ? attrs.form : undefined }}"
     datepicker-options="options"

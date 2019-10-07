@@ -47,37 +47,6 @@ angular.module('dugun.forms.helpers.uiSelectRequired')
 
 /**
  * @ngdoc overview
- * @memberof dugun.forms.helpers.numberOnly
- * @description
- * description
- */
-angular.module('dugun.forms.helpers.numberOnly', []);
-
-// Source from: http://stackoverflow.com/questions/19036443/angularjs-how-to-allow-only-a-number-digits-and-decimal-point-to-be-typed-in
-// Author: Nishchit Dhanani
-// Written on: 2013-11-14
-function NumberOnlyDirective($window) {
-    return {
-        require: 'ngModel',
-        link: function(scope, element, attrs, modelCtrl) {
-            if(attrs.numberOnly === 'true') {
-                modelCtrl.$formatters.push(function (inputValue) {
-                    return $window.parseFloat(inputValue);
-                });
-            }
-        }
-    };
-}
-
-NumberOnlyDirective.$inject = [
-    '$window',
-];
-
-angular.module('dugun.forms.helpers.numberOnly')
-    .directive('numberOnly', NumberOnlyDirective);
-
-/**
- * @ngdoc overview
  * @memberof dugun.forms.helpers.propsFilter
  * @description
  * Property filter
@@ -122,6 +91,37 @@ angular.module('dugun.forms.helpers.propsFilter')
             return out;
         };
     });
+
+/**
+ * @ngdoc overview
+ * @memberof dugun.forms.helpers.numberOnly
+ * @description
+ * description
+ */
+angular.module('dugun.forms.helpers.numberOnly', []);
+
+// Source from: http://stackoverflow.com/questions/19036443/angularjs-how-to-allow-only-a-number-digits-and-decimal-point-to-be-typed-in
+// Author: Nishchit Dhanani
+// Written on: 2013-11-14
+function NumberOnlyDirective($window) {
+    return {
+        require: 'ngModel',
+        link: function(scope, element, attrs, modelCtrl) {
+            if(attrs.numberOnly === 'true') {
+                modelCtrl.$formatters.push(function (inputValue) {
+                    return $window.parseFloat(inputValue);
+                });
+            }
+        }
+    };
+}
+
+NumberOnlyDirective.$inject = [
+    '$window',
+];
+
+angular.module('dugun.forms.helpers.numberOnly')
+    .directive('numberOnly', NumberOnlyDirective);
 
 /**
  * @ngdoc overview
@@ -557,7 +557,8 @@ function DgFormDate(moment) {
             id: '@dgId',
             ngChange: '&',
             options: '=?options',
-            datepickerPopupOpen: '=?'
+            datePickerPopupStatus: '=?datePickerPopupStatus',
+            datePickerPopupOpen: '=?datePickerPopupOpen'
         },
         templateUrl: 'form-elements/date/date.html',
         link: function(scope, element, attrs) {
@@ -603,7 +604,6 @@ DgFormDate.$inject = [
 ];
 
 angular.module('dugun.forms').directive('dgFormDate', DgFormDate);
-
 /**
  * @ngdoc directive
  * @name dugun.forms:dgFormCheckbox
@@ -752,6 +752,18 @@ function DgFormBooleanSelect() {
 angular.module('dugun.forms')
     .directive('dgFormBooleanSelect', DgFormBooleanSelect);
 
+/**
+ * @ngdoc overview
+ * @memberof dugun.forms.helpers
+ * @description
+ * Helpers
+ */
+angular.module('dugun.forms.helpers', [
+    'dugun.forms.helpers.propsFilter',
+    'dugun.forms.helpers.uiSelectRequired',
+    'dugun.forms.helpers.numberOnly',
+]);
+
 angular.module('ui.timepicker').value('uiTimepickerConfig',{
     asMoment: true,
     timeFormat: 'H:i'
@@ -766,18 +778,6 @@ DugunFormsUISelectConfig.$inject = [
 ];
 
 angular.module('dugun.forms').config(DugunFormsUISelectConfig);
-
-/**
- * @ngdoc overview
- * @memberof dugun.forms.helpers
- * @description
- * Helpers
- */
-angular.module('dugun.forms.helpers', [
-    'dugun.forms.helpers.propsFilter',
-    'dugun.forms.helpers.uiSelectRequired',
-    'dugun.forms.helpers.numberOnly',
-]);
 
 angular.module('dugun.forms').run(['$templateCache', function($templateCache) {
   $templateCache.put('form-elements/boolean/boolean-select.html',
@@ -801,7 +801,7 @@ angular.module('dugun.forms').run(['$templateCache', function($templateCache) {
 
 angular.module('dugun.forms').run(['$templateCache', function($templateCache) {
   $templateCache.put('form-elements/date/date.html',
-    '<input type="text" class="form-control" ng-model="date" ng-attr-id="{{ id || \'\' }}" uib-datepicker-popup ng-click="datepickerPopupOpen = true" is-open="datepickerPopupOpen" ng-required="required" ng-attr-form="{{ attrs.form ? attrs.form : undefined }}" datepicker-options="options" placeholder="{{ placeholder || \'\' }}">');
+    '<input type="text" class="form-control" ng-model="date" ng-attr-id="{{ id || \'\' }}" uib-datepicker-popup ng-click="datePickerPopupStatus.isOpen = true; datePickerPopupOpen.open = true" is-open="datePickerPopupStatus.isOpen" is-open="datePickerPopupOpen.isopen" ng-required="required" ng-attr-form="{{ attrs.form ? attrs.form : undefined }}" datepicker-options="options" placeholder="{{ placeholder || \'\' }}">');
 }]);
 
 angular.module('dugun.forms').run(['$templateCache', function($templateCache) {
