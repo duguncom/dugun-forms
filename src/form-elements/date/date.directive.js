@@ -13,7 +13,9 @@ function DgFormDate(moment) {
             placeholder: '@',
             id: '@dgId',
             ngChange: '&',
-            options: '=?options'
+            options: '=?options',
+            datePickerPopupStatus: '=?datePickerPopupStatus',
+            datePickerPopupOpen: '=?datePickerPopupOpen'
         },
         templateUrl: 'form-elements/date/date.html',
         link: function(scope, element, attrs) {
