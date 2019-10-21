@@ -14,8 +14,7 @@ function DgFormDate(moment) {
             id: '@dgId',
             ngChange: '&',
             options: '=?options',
-            datePickerPopupStatus: '=?datePickerPopupStatus',
-            datePickerPopupOpen: '=?datePickerPopupOpen'
+            datePickerPopupStatus: '=?datePickerPopupStatus'
         },
         templateUrl: 'form-elements/date/date.html',
         link: function(scope, element, attrs) {
@@ -32,9 +31,7 @@ function DgFormDate(moment) {
 
             // Initialize scope.dates with values from model.
             function init() {
-                if(!scope.date) {
-                    scope.date = null;
-                }
+                scope.date = null;
 
                 if(angular.isDate(scope.model)) {
                     scope.model = moment(scope.model).format('YYYY-MM-DD');
