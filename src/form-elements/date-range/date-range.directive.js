@@ -36,6 +36,8 @@ function DgFormDateRange(moment) {
 
             // Initialize scope.dates with values from model.
             function init() {
+                scope.dates = {startDate: null, endDate: null};
+
                 if(
                     (scope.modelStart && !scope.dates.startDate) ||
                     (scope.modelEnd && !scope.dates.endDate)
