@@ -28,6 +28,11 @@ function DgFormTime(moment) {
 
             // Initialize scope.dates with values from model.
             function init() {
+                if (!scope.model) {
+                    scope.time = null;
+                    return;
+                }
+
                 if(!scope.time) {
                     scope.time = undefined;
                 }

@@ -44,6 +44,12 @@ function DgFormDateTime(moment) {
             }
 
             function init() {
+                if (!scope.model) {
+                    scope.date = null;
+                    scope.time = null;
+                    return ;
+                }
+
                 if(!scope.date) {
                     scope.date = null;
                 }
