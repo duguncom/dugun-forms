@@ -273,7 +273,8 @@ function DgFormSelect2Multiple() {
             allowClear: '@',
             required: '=ngRequired',
             searchEnabled: '&',
-            ngDisabled: '='
+            ngDisabled: '=',
+            hasNoneValue: '='
         },
         templateUrl: 'form-elements/select2/multiple.html',
         compile: function(element, attrs) {
@@ -287,6 +288,14 @@ function DgFormSelect2Multiple() {
                         attrs.valueKey = 'name';
                     }
                     scope.attrs = attrs;
+                    scope.$watch('options', function(newVlaue) {
+                        if (attrs.hasNoneValue) {
+                            scope.options.push({
+                                id: 0,
+                                name: 'None'
+                            })
+                        }
+                    })
                 }
             }
         }
