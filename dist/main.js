@@ -234,7 +234,8 @@ function DgFormSelect2() {
             allowClear: '@',
             required: '=ngRequired',
             searchEnabled: '&',
-            ngDisabled: '='
+            ngDisabled: '=',
+            hasNoneValue: '='
         },
         templateUrl: 'form-elements/select2/single.html',
         compile: function(element, attrs) {
@@ -248,6 +249,14 @@ function DgFormSelect2() {
                         attrs.valueKey = 'name';
                     }
                     scope.attrs = attrs;
+                    scope.$watch('options', function(newVlaue) {
+                        if (scope.hasNoneValue) {
+                            scope.options.unshift({
+                                id: 0,
+                                name: 'None'
+                            })
+                        }
+                    })
                 }
             };
         }
@@ -289,8 +298,8 @@ function DgFormSelect2Multiple() {
                     }
                     scope.attrs = attrs;
                     scope.$watch('options', function(newVlaue) {
-                        if (attrs.hasNoneValue) {
-                            scope.options.push({
+                        if (scope.hasNoneValue) {
+                            scope.options.unshift({
                                 id: 0,
                                 name: 'None'
                             })
