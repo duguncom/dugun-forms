@@ -250,7 +250,7 @@ function DgFormSelect2() {
                     }
                     scope.attrs = attrs;
                     scope.$watch('options', function(newVlaue) {
-                        if (scope.hasNoneValue) {
+                        if (scope.hasNoneValue && newVlaue[0].id !== 0) {
                             scope.options.unshift({
                                 id: 0,
                                 name: 'None'
@@ -298,7 +298,7 @@ function DgFormSelect2Multiple() {
                     }
                     scope.attrs = attrs;
                     scope.$watch('options', function(newVlaue) {
-                        if (scope.hasNoneValue) {
+                        if (scope.hasNoneValue && newVlaue[0].id !== 0) {
                             scope.options.unshift({
                                 id: 0,
                                 name: 'None'
