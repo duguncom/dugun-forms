@@ -14,7 +14,7 @@ angular.module('dugun.forms.helpers.propsFilter')
                     for (var i = 0; i < keys.length; i++) {
                         var prop = keys[i];
                         var text = props[prop].toLowerCase();
-                        if(typeof item === 'undefined' || typeof item[prop] === 'undefined') {
+                        if(typeof item === 'undefined' || typeof item[prop] === 'undefined' || item[prop] === null) {
                             itemMatches = false;
                             break;
                         }
