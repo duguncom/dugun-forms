@@ -5,8 +5,7 @@ var gulp = require('gulp'),
     htmlmin = require('gulp-htmlmin'),
     htmlhint = require('gulp-htmlhint'),
     clean = require('gulp-clean'),
-    pipes = {},
-    KarmaServer = require('karma').Server;
+    pipes = {}
 
 pipes.buildJS = function() {
     console.info('Building JS');
@@ -49,12 +48,6 @@ pipes.build = function() {
         .pipe(gulp.dest('dist/'))
         .pipe(gulp.src(['dist/dugun-forms.js', 'dist/templates.js'], {read: false}));
 };
-
-pipes.test = function(done) {
-    new KarmaServer({
-        configFile: __dirname + '/karma.conf.js',
-    }, done).start();
-}
 
 gulp.task('build-js', pipes.buildJS);
 gulp.task('merge-js', pipes.mergeJS);
