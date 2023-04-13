@@ -758,7 +758,8 @@ function DgFormBooleanSelect() {
             labelFalse: '@',
             valueTrue: '&',
             valueFalse: '&',
-            required: '=ngRequired'
+            required: '=ngRequired',
+            ngDisabled: '='
         },
         templateUrl: 'form-elements/boolean/boolean-select.html',
         link: function(scope, element, attrs) {
@@ -811,7 +812,7 @@ angular.module('dugun.forms').config(DugunFormsUISelectConfig);
 
 angular.module('dugun.forms').run(['$templateCache', function($templateCache) {
   $templateCache.put('form-elements/boolean/boolean-select.html',
-    '<dg-form-select2 ng-model="model" options="options" placeholder="{{ attrs.placeholder }}" allow-clear="{{ allowClear }}" ng-required="required ? true : false" search-enabled="false"></dg-form-select2>');
+    '<dg-form-select2 ng-model="model" ng-disabled="ngDisabled ? true : false" options="options" placeholder="{{ attrs.placeholder }}" allow-clear="{{ allowClear }}" ng-required="required ? true : false" search-enabled="false"></dg-form-select2>');
 }]);
 
 angular.module('dugun.forms').run(['$templateCache', function($templateCache) {
