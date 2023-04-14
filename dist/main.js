@@ -374,28 +374,6 @@ angular.module('dugun.forms').directive('dgFormRequiredAsterisk', DgFormRequired
 
 /**
  * @ngdoc directive
- * @name dugun.forms:dgFormRadio
- * @restrict 'ACE'
- * @scope
- **/
-function DgFormRadio() {
-    return {
-        restrict: 'ACE',
-        transclude: true,
-        scope: {
-            model: '=ngModel',
-            options: '=',
-            required: '=ngRequired',
-            name: '@dgName'
-        },
-        templateUrl: 'form-elements/radio/template.html'
-    };
-}
-
-angular.module('dugun.forms').directive('dgFormRadio', DgFormRadio);
-
-/**
- * @ngdoc directive
  * @name dgFormHtml
  * @restrict 'E'
  * @scope
@@ -419,6 +397,28 @@ function DgFormHtml() {
 }
 
 angular.module('dugun.forms').directive('dgFormHtml', DgFormHtml);
+
+/**
+ * @ngdoc directive
+ * @name dugun.forms:dgFormRadio
+ * @restrict 'ACE'
+ * @scope
+ **/
+function DgFormRadio() {
+    return {
+        restrict: 'ACE',
+        transclude: true,
+        scope: {
+            model: '=ngModel',
+            options: '=',
+            required: '=ngRequired',
+            name: '@dgName'
+        },
+        templateUrl: 'form-elements/radio/template.html'
+    };
+}
+
+angular.module('dugun.forms').directive('dgFormRadio', DgFormRadio);
 
 /**
  * @ngdoc directive
@@ -759,7 +759,7 @@ function DgFormBooleanSelect() {
             valueTrue: '&',
             valueFalse: '&',
             required: '=ngRequired',
-            ngDisabled: '='
+            ngDisabled: '=',
         },
         templateUrl: 'form-elements/boolean/boolean-select.html',
         link: function(scope, element, attrs) {
@@ -812,7 +812,7 @@ angular.module('dugun.forms').config(DugunFormsUISelectConfig);
 
 angular.module('dugun.forms').run(['$templateCache', function($templateCache) {
   $templateCache.put('form-elements/boolean/boolean-select.html',
-    '<dg-form-select2 ng-model="model" ng-disabled="ngDisabled ? true : false" options="options" placeholder="{{ attrs.placeholder }}" allow-clear="{{ allowClear }}" ng-required="required ? true : false" search-enabled="false"></dg-form-select2>');
+    '<dg-form-select2 ng-model="model" options="options" placeholder="{{ attrs.placeholder }}" allow-clear="{{ allowClear }}" ng-required="required ? true : false" search-enabled="false"></dg-form-select2>');
 }]);
 
 angular.module('dugun.forms').run(['$templateCache', function($templateCache) {
@@ -846,13 +846,13 @@ angular.module('dugun.forms').run(['$templateCache', function($templateCache) {
 }]);
 
 angular.module('dugun.forms').run(['$templateCache', function($templateCache) {
-  $templateCache.put('form-elements/html/template.html',
-    '<text-angular ng-model="model" ta-toolbar="{{ taToolbar }}" ng-required="required" ng-attr-maxlength="{{ attrs.maxlength || undefined }}" ng-readonly="readonly" ng-disabled="ngDisabled"></text-angular>');
+  $templateCache.put('form-elements/radio/template.html',
+    '<div class="radio" ng-repeat="option in options"><label><input type="radio" ng-model="$parent.model" ng-value="option.id" ng-required="{{ required ? true : false }}" name="{{ name }}"> <span ng-bind="option.name"></span></label></div>');
 }]);
 
 angular.module('dugun.forms').run(['$templateCache', function($templateCache) {
-  $templateCache.put('form-elements/radio/template.html',
-    '<div class="radio" ng-repeat="option in options"><label><input type="radio" ng-model="$parent.model" ng-value="option.id" ng-required="{{ required ? true : false }}" name="{{ name }}"> <span ng-bind="option.name"></span></label></div>');
+  $templateCache.put('form-elements/html/template.html',
+    '<text-angular ng-model="model" ta-toolbar="{{ taToolbar }}" ng-required="required" ng-attr-maxlength="{{ attrs.maxlength || undefined }}" ng-readonly="readonly" ng-disabled="ngDisabled"></text-angular>');
 }]);
 
 angular.module('dugun.forms').run(['$templateCache', function($templateCache) {
