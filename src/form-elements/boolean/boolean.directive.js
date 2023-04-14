@@ -11,7 +11,8 @@ function DgFormBoolean() {
             model: '=ngModel',
             allowClear: '@',
             labelTrue: '@',
-            labelFalse: '@'
+            labelFalse: '@',
+            ngDisabled: '=',
         },
         templateUrl: 'form-elements/boolean/boolean.html'
     };
